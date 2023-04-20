@@ -1,0 +1,6 @@
+{
+  "name": "First_App",
+  "identifier": "com.domain.app.FirstApp",
+  "version": "1.0.0",
+  "icon": "./static/icon.png"
+}
