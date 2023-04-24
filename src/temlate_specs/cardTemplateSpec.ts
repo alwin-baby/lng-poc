@@ -1,5 +1,12 @@
 import Lightning from '@lightningjs/sdk/src/Lightning'
 
+interface imageItems {
+  height: number
+  type: string
+  url: string
+  width: number
+}
+
 export interface item {
   actor: object[]
   availableDays: any
@@ -13,7 +20,7 @@ export interface item {
   downloadUrl: string
   episodeNumber: string | number
   genre: string[]
-  images: object[]
+  images: imageItems[]
   isCastable: boolean
   isCcAvailable: boolean
   isDownloadable: boolean
@@ -29,6 +36,22 @@ export interface item {
   trailers: object[]
   type: string
   uid: string
+}
+
+export interface railData {
+  apiMapping: object[]
+  content: item[]
+  totalElements: number
+  totalPages: number
+}
+
+export interface responseData {
+  config: object
+  data: railData
+  headers: object
+  request: object
+  status: number
+  statusText: string
 }
 
 interface CardTemplateSpec extends Lightning.Component.TemplateSpec {
