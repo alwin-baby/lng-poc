@@ -90,7 +90,7 @@ export class Details
   }
 
   override pageTransition() {
-    return 'crossFade'
+    return 'crossFade' as any
   }
 
   override set params(obj: { data: { bannerUrl: string; title: string; description: string } }) {
