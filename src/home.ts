@@ -133,7 +133,7 @@ export class Home
   getRails() {
     axios
       .get(
-        'https://api-entertainment.enlight.diagnal.com/v1b3/content/filters/dgnlsl30-movies-action?page=1&language=en&size=50',
+        'https://api-entertainment.enlight.diagnal.com/v1b3/content/filters/marvel-movies?page=1&language=en&size=50',
       )
       .then((res) => {
         const rail: {
