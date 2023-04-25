@@ -30,6 +30,7 @@ interface HomeTemplateSpec extends Lightning.Component.TemplateSpec {
     Title: object
     Description: object
   }
+  IsPage: true
 }
 
 export class Home

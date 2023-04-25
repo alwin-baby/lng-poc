@@ -9,6 +9,7 @@ interface DetailsTemplateSpec extends Lightning.Component.TemplateSpec {
     Title: object
     Description: object
   }
+  IsPage: true
 }
 
 export class Details
@@ -81,13 +82,53 @@ export class Details
   override _enable() {
     this.BigImage.on('txLoaded', () => {
       this.anmInBigImage.start()
+      const widgets = this.widgets as any
+      if (widgets) {
+        const videoWidget = widgets.videowidget
+        const widgetBackground = videoWidget.tag('Background' as any)
+        widgetBackground.patch({
+          color: 0xff3af91d,
+          alpha: 0.5,
+        })
+        const anmInWidget = widgetBackground.animation({
+          duration: 0.5,
+          repeat: 0,
+          actions: [{ p: 'scale', v: { 0: 1, 1: 1.3 } }],
+        })
+        anmInWidget.start()
+      }
     })
   }
 
   override _handleLeft() {
     this.anmOutBigImage.start()
+    const widgets = this.widgets as any
+    if (widgets) {
+      const videoWidget = widgets.videowidget
+      const widgetBackground = videoWidget.tag('Background' as any)
+      widgetBackground.patch({
+        color: 0xbbffffff,
+        alpha: 0.5,
+      })
+      const anmOutWidget = widgetBackground.animation({
+        duration: 0.5,
+        repeat: 0,
+        actions: [{ p: 'scale', v: { 0: 1.3, 1: 1 } }],
+      })
+      anmOutWidget.start()
+    }
     Router.back()
   }
+
+  // override _handleEnter() {
+  //   const w = this.widgets as any
+  //   const vw = w.videowidget
+  //   const widgetBackground = vw.tag('Background' as any)
+  //   widgetBackground.patch({
+  //     w: 1000,
+  //   })
+  //   console.log(widgetBackground)
+  // }
 
   override pageTransition() {
     return 'crossFade' as any

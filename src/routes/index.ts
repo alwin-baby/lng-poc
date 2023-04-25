@@ -8,10 +8,12 @@ const routes = {
     {
       path: 'home',
       component: Home,
+      widgets: ['VideoWidget' as any],
     },
     {
       path: 'details',
       component: Details,
+      widgets: ['VideoWidget' as any],
     },
   ],
 } as Router.Config

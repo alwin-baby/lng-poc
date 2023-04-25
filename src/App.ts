@@ -18,6 +18,9 @@
  */
 import { Lightning, Router } from '@lightningjs/sdk'
 import routes from './routes'
+import { VideoWidget } from './widgets/videoWidget'
+import { Home } from './home'
+import { Details } from './details'
 
 interface AppTemplateSpec extends Lightning.Component.TemplateSpec {
   Background: {
@@ -30,6 +33,25 @@ export class App
   extends Router.App
   implements Lightning.Component.ImplementTemplateSpec<AppTemplateSpec>
 {
+  static override _template() {
+    return {
+      Pages: {
+        Home: {
+          type: Home,
+        },
+        Details: {
+          type: Details,
+        },
+      },
+      Widgets: {
+        // this hosts all the widgets
+        VideoWidget: {
+          type: VideoWidget,
+        },
+      },
+    }
+  }
+
   // setting up the router for the application
   override _setup() {
     Router.startRouter(routes, this)
