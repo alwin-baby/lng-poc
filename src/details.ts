@@ -5,6 +5,10 @@ interface DetailsTemplateSpec extends Lightning.Component.TemplateSpec {
     RailWrapper: object
   }
   BigImage: object
+  Details: {
+    Title: object
+    Description: object
+  }
 }
 
 export class Details
@@ -24,6 +28,32 @@ export class Details
         h: 1080,
         color: 0xfffbb03b,
         src: Utils.asset('images/background.png'),
+      },
+      Details: {
+        Title: {
+          x: 40,
+          y: 185,
+          shader: null,
+          text: {
+            text: 'regreg',
+            fontSize: 80,
+          },
+          color: 0xfffbb03b,
+        },
+        Description: {
+          x: 40,
+          y: 290,
+          w: 900,
+          shader: null,
+          text: {
+            wordWrap: true,
+            maxLines: 3,
+            text: 'rgdrgerg',
+            maxLinesSuffix: '...',
+            fontSize: 30,
+          },
+          color: 0xfffbb03b,
+        },
       },
       BigImage: {
         w: 576,
@@ -54,7 +84,7 @@ export class Details
     })
   }
 
-  override _handleBack() {
+  override _handleLeft() {
     this.anmOutBigImage.start()
     Router.back()
   }
@@ -63,10 +93,17 @@ export class Details
     return 'crossFade'
   }
 
-  override set params(obj: { src: string; bannerUrl: string }) {
-    const { src } = obj
+  override set params(obj: { data: { bannerUrl: string; title: string; description: string } }) {
+    const { data } = obj
+    const { bannerUrl, title, description } = data
     this.BigImage.patch({
-      src: src,
+      src: bannerUrl,
+    })
+    this.tag('Details.Title' as any).text.patch({
+      text: title,
+    })
+    this.tag('Details.Description' as any).text.patch({
+      text: description,
     })
   }
 }

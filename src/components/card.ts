@@ -9,6 +9,8 @@ class Card
   data: item = {} as item
   index: number | null = null
   srcx = ''
+  title = ''
+  description = ''
   bannerUrl = ''
 
   static override _template() {
@@ -22,11 +24,13 @@ class Card
     }
   }
 
-  set props(obj: { src: string; i: number; bannerUrl: string }) {
-    const { src, i, bannerUrl } = obj
-    this.index = i
+  set props(obj: { data: { src: string; bannerUrl: string; title: string; description: string } }) {
+    const { data } = obj
+    const { src, bannerUrl, title, description } = data
     this.srcx = src
     this.bannerUrl = bannerUrl
+    this.title = title
+    this.description = description
     this.patch({
       src: src,
       scale: 1,
@@ -34,11 +38,21 @@ class Card
   }
 
   override _handleEnter() {
-    Router.navigate('details', { src: this.bannerUrl, ind: this.index })
+    const data = {
+      title: this.title,
+      description: this.description,
+      bannerUrl: this.bannerUrl,
+    }
+    Router.navigate('details', { data })
   }
 
   override _focus() {
-    this.fireAncestors('$updateBigImage' as any, this.bannerUrl)
+    const data = {
+      title: this.title,
+      description: this.description,
+      bannerUrl: this.bannerUrl,
+    }
+    this.fireAncestors('$updateBigImage' as any, data)
     this.patch({
       scale: 1.15,
     })

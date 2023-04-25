@@ -26,6 +26,10 @@ interface HomeTemplateSpec extends Lightning.Component.TemplateSpec {
     RailWrapper: object
   }
   BigImage: object
+  Details: {
+    Title: object
+    Description: object
+  }
 }
 
 export class Home
@@ -64,6 +68,32 @@ export class Home
           w: 1800,
           h: 500,
           color: 0xbbffffff,
+        },
+      },
+      Details: {
+        Title: {
+          x: 40,
+          y: 185,
+          shader: null,
+          text: {
+            text: '',
+            fontSize: 80,
+          },
+          color: 0xfffbb03b,
+        },
+        Description: {
+          x: 40,
+          y: 290,
+          w: 900,
+          shader: null,
+          text: {
+            wordWrap: true,
+            maxLines: 3,
+            text: '',
+            maxLinesSuffix: '...',
+            fontSize: 30,
+          },
+          color: 0xfffbb03b,
         },
       },
       BigImage: {
@@ -109,7 +139,7 @@ export class Home
         const rail: {
           type: typeof Card
           x: number
-          props: { src: string; bannerUrl: string; i: number }
+          props: { data: { src: string; bannerUrl: string; title: string; description: string } }
         }[] = []
         this.data = res.data.content
         this.data.map((cardItem, i) => {
@@ -118,7 +148,14 @@ export class Home
           rail.push({
             type: Card,
             x: i * this.cardWidthIncludingMargin,
-            props: { src: url, bannerUrl: bannerUrl, i: i },
+            props: {
+              data: {
+                src: url,
+                bannerUrl: bannerUrl,
+                title: cardItem.title,
+                description: cardItem.description,
+              },
+            },
           })
         })
         this.RailWrapper.children = rail
@@ -127,9 +164,16 @@ export class Home
       .catch((err) => console.log('err', err))
   }
 
-  $updateBigImage(src: string) {
+  $updateBigImage(data: { bannerUrl: string; title: string; description: string }) {
+    const { title, description, bannerUrl } = data
     this.BigImage.patch({
-      src: src,
+      src: bannerUrl,
+    })
+    this.tag('Details.Title' as any).text.patch({
+      text: title,
+    })
+    this.tag('Details.Description' as any).text.patch({
+      text: description,
     })
   }
 
