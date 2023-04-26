@@ -51,6 +51,8 @@ export class Home
   wrapperMarginFromLeft = 40
   cardWidthIncludingMargin = 200
 
+  wid: any = ''
+
   readonly Background = this.getByRef('Background')!
   readonly RailWrapper = this.tag('RailWrapper' as any)!
   readonly BigImage = this.tag('BigImage' as any)!
@@ -129,6 +131,13 @@ export class Home
     this.RailWrapper.patch({
       x: this.wrapperMarginFromLeft,
     })
+    setTimeout(() => {
+      const w = this.widgets as any
+      if (w) {
+        this.wid = w.videowidget
+        console.log('this.wid.txt', this.wid.txt)
+      }
+    }, 500)
   }
 
   getRails() {
@@ -191,12 +200,12 @@ export class Home
   }
 
   override pageTransition() {
-    return 'crossFade'
+    return 'crossFade' as any
   }
 
-  override _handleEnter() {
-    console.log('aaa')
-  }
+  // override _handleEnter() {
+  //   console.log('aaa')
+  // }
 
   override _handleLeft() {
     if (this.index > 0) {
@@ -210,6 +219,17 @@ export class Home
       this.index += 1
       this.handleTranslate()
     }
+  }
+
+  static override _states() {
+    // interaction from widget
+    return [
+      class FirstState extends this {
+        override $enter() {
+          console.log('this.wid.txt new', this.wid.txt)
+        }
+      },
+    ]
   }
 
   override _getFocused(): any {

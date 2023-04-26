@@ -19,6 +19,7 @@ export class Details
   readonly BigImage = this.tag('BigImage' as any)!
 
   srcx = ''
+  txt = 'Alwin'
 
   static override _template(): Lightning.Component.Template<DetailsTemplateSpec> {
     return {
@@ -86,14 +87,17 @@ export class Details
       if (widgets) {
         const videoWidget = widgets.videowidget
         const widgetBackground = videoWidget.tag('Background' as any)
-        widgetBackground.patch({
-          color: 0xff3af91d,
-          alpha: 0.5,
-        })
+        // widgetBackground.patch({
+        //   color: 0xff3af91d,
+        //   alpha: 0.5,
+        // })
         const anmInWidget = widgetBackground.animation({
           duration: 0.5,
           repeat: 0,
-          actions: [{ p: 'scale', v: { 0: 1, 1: 1.3 } }],
+          actions: [
+            { p: 'scale', v: { 0: 1, 1: 1.3 } },
+            { p: 'color', v: { 0: 0xbbffffff, 1: 0xbb3af91d } },
+          ],
         })
         anmInWidget.start()
       }
@@ -105,15 +109,19 @@ export class Details
     const widgets = this.widgets as any
     if (widgets) {
       const videoWidget = widgets.videowidget
+      videoWidget.logg('alwin') // interaction to widget
       const widgetBackground = videoWidget.tag('Background' as any)
-      widgetBackground.patch({
-        color: 0xbbffffff,
-        alpha: 0.5,
-      })
+      // widgetBackground.patch({
+      //   color: 0xbbffffff,
+      //   alpha: 0.5,
+      // })
       const anmOutWidget = widgetBackground.animation({
         duration: 0.5,
         repeat: 0,
-        actions: [{ p: 'scale', v: { 0: 1.3, 1: 1 } }],
+        actions: [
+          { p: 'scale', v: { 0: 1.3, 1: 1 } },
+          { p: 'color', v: { 0: 0xbb3af91d, 1: 0xbbffffff } },
+        ],
       })
       anmOutWidget.start()
     }

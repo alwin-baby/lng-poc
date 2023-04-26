@@ -1,4 +1,4 @@
-import { Lightning } from '@lightningjs/sdk'
+import { Lightning, Router } from '@lightningjs/sdk'
 
 interface VideoWidgetTemplateSpec extends Lightning.Component.TemplateSpec {
   Background: object
@@ -25,11 +25,12 @@ export class VideoWidget
     }
   }
 
-  override _init() {
-    // this.tag('Background' as any).patch({
-    //   text: {
-    //     text: this.txt,
-    //   },
-    // })
+  logg = (a: string) => console.log(a)
+
+  override _enable() {
+    setTimeout(() => {
+      this.txt = 'Baby'
+      Router.getActivePage()?._setState('FirstState')
+    }, 2000)
   }
 }
